@@ -1,0 +1,13 @@
+[package]
+name = "remote-sudo-approve-plugin"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+
+[lib]
+name = "remote_sudo_approve_plugin"
+crate-type = ["cdylib", "rlib"]
+path = "src/lib.rs"
+
+[dependencies]
+libc = "0.2"

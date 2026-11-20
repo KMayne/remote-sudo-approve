@@ -1,0 +1,10 @@
+{
+  "name": "remote-sudo-approve-server",
+  "private": true,
+  "type": "module",
+  "description": "The remote-sudo-approve server: approval page and relay (see ../DESIGN.md)",
+  "main": "server.mjs",
+  "scripts": { "start": "node server.mjs", "test": "node --test" },
+  "dependencies": { "web-push": "3.6.7" },
+  "engines": { "node": ">=22" }
+}

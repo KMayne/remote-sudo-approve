@@ -1,0 +1,20 @@
+:root { --bg:#fff; --fg:#111; --muted:#666; --warn:#b00020; --ok:#0a7a2f; --code:#f3f3f3; color-scheme: light dark; }
+@media (prefers-color-scheme: dark) { :root { --bg:#121212; --fg:#eee; --muted:#aaa; --warn:#ff6b6b; --ok:#5fd38d; --code:#1e1e1e; } }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.45 system-ui, sans-serif; }
+main { max-width:40rem; margin:0 auto; padding:1rem; }
+h1 { font-size:1.4rem; margin:.5rem 0; }
+.lead { color:var(--muted); }
+.argv, .mono, pre { font-family: ui-monospace, monospace; }
+.argv { background:var(--code); padding:.75rem .75rem .75rem 2.5rem; border-radius:8px; word-break:break-all; font-size:1.05rem; }
+table { border-collapse:collapse; width:100%; margin:.75rem 0; }
+th { text-align:left; color:var(--muted); font-weight:normal; padding:.2rem .75rem .2rem 0; vertical-align:top; white-space:nowrap; }
+td { word-break:break-all; padding:.2rem 0; }
+.warn, .warnings, .error { color:var(--warn); }
+.ok { color:var(--ok); }
+pre.diff { background:var(--code); padding:.5rem; overflow-x:auto; white-space:pre-wrap; word-break:break-all; }
+button { font:inherit; padding:.8rem 1.2rem; border-radius:8px; border:0; background:#1a56db; color:#fff; width:100%; margin:.5rem 0; }
+button:disabled { opacity:.5; }
+button.secondary { background:transparent; color:var(--muted); border:1px solid var(--muted); }
+.note { color:var(--muted); font-size:.85rem; }
+input { font:inherit; padding:.4rem; margin:.5rem 0 .5rem .5rem; }
+code { font-family: ui-monospace, monospace; }

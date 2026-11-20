@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; manifest-src 'self'; worker-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; require-trusted-types-for 'script'; trusted-types sw">
+<meta name="referrer" content="no-referrer">
+<title>sudo approval</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<main>
+  <section id="request"></section>
+  <p id="status" role="status"></p>
+  <button id="approve" hidden>Approve with passkey</button>
+  <p class="note">Notifications can be faked; only what this page shows is signed.</p>
+  <button id="subscribe" class="secondary">Get notifications on this device</button>
+</main>
+</body>
+</html>

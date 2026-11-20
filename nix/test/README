@@ -1,0 +1,2 @@
+# TEST ONLY: stands in for a phone passkey in the NixOS VM test.
+# Never pin this key on a real machine.

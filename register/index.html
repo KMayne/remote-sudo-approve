@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'; connect-src 'none'; require-trusted-types-for 'script'; trusted-types 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Register a sudo passkey</title>
+<link rel="stylesheet" href="style.css">
+<script type="module" src="register.js"></script>
+</head>
+<body>
+<main>
+  <h1>Register a sudo approval passkey</h1>
+  <p>Creates a passkey for this address. Nothing is sent anywhere: copy the result into the NixOS config yourself (<code>remoteSudoApprove.credentials</code>).</p>
+  <label>Name <input id="name" value="phone" maxlength="40"></label>
+  <button id="create">Create passkey</button>
+  <p id="status" role="status"></p>
+  <pre id="out"></pre>
+</main>
+</body>
+</html>
