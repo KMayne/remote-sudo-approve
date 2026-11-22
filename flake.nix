@@ -83,6 +83,8 @@
             User = "65534:65534";
             Env = [ "PORT=8080" ];
             ExposedPorts."8080/tcp" = { };
+            # Links the GHCR package to this repo.
+            Labels."org.opencontainers.image.source" = "https://github.com/KMayne/remote-sudo-approve";
           };
         };
       });
