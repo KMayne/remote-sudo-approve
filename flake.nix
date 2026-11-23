@@ -77,11 +77,18 @@
         image = pkgs.dockerTools.buildLayeredImage {
           name = "ghcr.io/kmayne/remote-sudo-approve";
           tag = "latest";
-          contents = [ self.packages.${pkgs.system}.server ];
+          # cacert: the server verifies the push services' TLS certificates.
+          contents = [
+            self.packages.${pkgs.system}.server
+            pkgs.cacert
+          ];
           config = {
             Cmd = [ "/bin/remote-sudo-approve-server" ];
             User = "65534:65534";
-            Env = [ "PORT=8080" ];
+            Env = [
+              "PORT=8080"
+              "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+            ];
             ExposedPorts."8080/tcp" = { };
             # Links the GHCR package to this repo.
             Labels."org.opencontainers.image.source" = "https://github.com/KMayne/remote-sudo-approve";
