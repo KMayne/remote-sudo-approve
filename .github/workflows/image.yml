@@ -1,0 +1,59 @@
+# Builds the server image (nix build .#image) on every push to main and pushes
+# it to ghcr.io/<owner>/remote-sudo-approve, tagged with the short commit and
+# `latest`, with a build provenance attestation. Nothing deploys it: pin the
+# digest in your own manifests when you want it.
+#
+# Verify an image came from this workflow:
+#   gh attestation verify oci://ghcr.io/<owner>/remote-sudo-approve@sha256:... --repo <owner>/remote-sudo-approve
+name: image
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: image
+  cancel-in-progress: false
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: cachix/install-nix-action@bb0495a1086c46893eee56f32fd192dfe4a15bb9 # v32.0.0
+
+      - name: Build
+        run: nix build .#image --print-build-logs
+
+      - name: Push
+        id: push
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          image=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/remote-sudo-approve
+          short=${GITHUB_SHA::7}
+          printf %s "$TOKEN" | skopeo login ghcr.io -u "$ACTOR" --password-stdin
+          skopeo copy --digestfile digest docker-archive:result "docker://$image:$short"
+          skopeo copy "docker://$image:$short" "docker://$image:latest"
+          skopeo logout ghcr.io
+          echo "image=$image" >> "$GITHUB_OUTPUT"
+          echo "digest=$(cat digest)" >> "$GITHUB_OUTPUT"
+          echo "$image@$(cat digest) # $short" >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-name: ${{ steps.push.outputs.image }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true

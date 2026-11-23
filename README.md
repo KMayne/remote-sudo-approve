@@ -86,6 +86,9 @@ shows what the switch changes in anything that decides who gets root.
 ### 1. Run the server
 
 Container image: `ghcr.io/kmayne/remote-sudo-approve`. It listens on port 8080.
+Every push to main builds it (`.github/workflows/image.yml`), tagged with the
+short commit, with a provenance attestation you can check before pinning a digest:
+`gh attestation verify oci://ghcr.io/kmayne/remote-sudo-approve@sha256:… --repo KMayne/remote-sudo-approve`.
 Make the secrets with the setup command in the image:
 
 ```sh
